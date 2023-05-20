@@ -3,7 +3,6 @@
 //#define StageNumber = 10
 
 Character minji = { 100 , 10, 4 };
-Monster M1[] = { {50, 2, 2}, {100, 5, 5 },  };
 extern int state = 1;
 char input[1] = { 0 };
 
@@ -14,19 +13,19 @@ void textcolor(int colorNum)
 }
 
 // 정보창 출력
-void Information(Monster M1, int number)
+void Information()
 {
 	textcolor(White);
 	printf("\n--------------------------------------------------------\n");
 	printf("l 플레이어\thp : %3d / attack : %3d / defend : %3d l\n", minji.health, minji.damage, minji.defense);
 	printf("--------------------------------------------------------\n");
 	printf("\n--------------------------------------------------------\n");
-	printf("l 몬스터 \thp : %3d / attack : %3d / defend : %3d l\n", M1[number + 1].health, M1[number + 1].damage, M1[number + 1].defense);
+	printf("l 몬스터 \thp : %3d / attack : %3d / defend : %3d l\n", M1.mon.health, M1.mon.damage, M1.mon.defense);
 	printf("--------------------------------------------------------\n\n\n");
 }
 
 // 1 주인공이 몬스터를 공격
-int Character_Attack(int ret, Monster M1, int number)
+int Character_Attack(int ret)
 {
 	srand(time(NULL));
 	int random = rand() % 2 + 1; // 1 or 2
@@ -36,12 +35,13 @@ int Character_Attack(int ret, Monster M1, int number)
 	printf("\n\n'공격'을 선택하셨습니다.\n");
 	printf("%d만큼의 데미지가 몬스터에게 가해졌습니다.\n", minji.damage);
 	
+	// 몬스터가 보호막이 있을 때
 	if (ret == 1)
 	{
-		if (minji.damage > M1[number + 1].defense)
+		if (minji.damage > M1.mon.defense)
 		{
-			printf("몬스터의 보호막으로 인해 실제 %d만큼만 공격을 받습니다!\n", minji.damage - M1[number + 1].defense);
-			M1[number + 1].health -= minji.damage - M1[number + 1].defense;
+			printf("몬스터의 보호막으로 인해 실제 %d만큼만 공격을 받습니다!\n", minji.damage - M1.mon.defense);
+			M1.mon.health -= minji.damage - M1.mon.defense;
 		}
 		else
 		{
@@ -49,16 +49,17 @@ int Character_Attack(int ret, Monster M1, int number)
 			printf("몬스터는 플레이어의 공격을 회피합니다!\n");
 		}
 	}
+	// 몬스터가 보호막이 없을 때
 	else
 	{
-		M1[number + 1].health -= minji.damage;
+		M1.mon.health -= minji.damage;
 	}
 	
-	if (M1[number + 1].health < 0)	 M1[number + 1].health = 0;  // 체력 0으로 표시
+	if (M1.mon.health < 0)	 M1.mon.health = 0;  // 체력 0으로 표시
 
 	Information();
 
-	if (M1[number + 1].health <= 0)
+	if (M1.mon.health <= 0)
 	{
 		textcolor(Yellow);		printf("☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★☆★\n☆★☆★ ");
 		textcolor(White);		printf("축하합니다! 몬스터가 죽었습니다!");
@@ -74,8 +75,8 @@ int Character_Attack(int ret, Monster M1, int number)
 	{
 		textcolor(Red);
 		printf("몬스터가 '공격'을 선택했습니다.\n");
-		printf("%d만큼의 데미지가 플레이어에게 가해졌습니다.\n", M1[number + 1].damage);
-		minji.health -= M1[number + 1].damage;
+		printf("%d만큼의 데미지가 플레이어에게 가해졌습니다.\n", M1.mon.damage);
+		minji.health -= M1.mon.damage;
 
 		if (minji.health < 0)	minji.health = 0;  // 체력 0으로 표시
 
@@ -96,7 +97,7 @@ int Character_Attack(int ret, Monster M1, int number)
 	{
 		textcolor(DarkSkyBlue);
 		printf("몬스터가 '보호'를 선택했습니다.\n");
-		printf("다음 턴에 플레이어의 공격이 %d만큼 상쇄됩니다.\n", M1[number + 1].defense);
+		printf("다음 턴에 플레이어의 공격이 %d만큼 상쇄됩니다.\n", M1.mon.defense);
 		textcolor(White);
 		system("PAUSE");
 		return 1;
@@ -121,12 +122,12 @@ int Character_Defend()
 	{
 		textcolor(Red);
 		printf("몬스터가 '공격'을 선택했습니다.\n");
-		printf("%d만큼의 데미지가 플레이어에게 가해졌습니다.\n", M1[number + 1].damage);
+		printf("%d만큼의 데미지가 플레이어에게 가해졌습니다.\n", M1.mon.damage);
 		
-		if (M1[number + 1].damage > minji.defense)
+		if (M1.mon.damage > minji.defense)
 		{
-			printf("플레이어의 보호막으로 인해 실제 %d만큼만 공격을 받습니다!\n", M1[number + 1].damage - minji.defense);
-			minji.health -= M1[number + 1].damage - minji.defense;
+			printf("플레이어의 보호막으로 인해 실제 %d만큼만 공격을 받습니다!\n", M1.mon.damage - minji.defense);
+			minji.health -= M1.mon.damage - minji.defense;
 		}
 		else
 		{
@@ -154,7 +155,7 @@ int Character_Defend()
 	{
 		textcolor(DarkSkyBlue);
 		printf("몬스터가 '보호'를 선택했습니다.\n");
-		printf("다음 턴에 플레이어의 공격이 %d만큼 상쇄됩니다.\n", M1[number + 1].defense);
+		printf("다음 턴에 플레이어의 공격이 %d만큼 상쇄됩니다.\n", M1.mon.defense);
 		textcolor(White);
 		system("PAUSE");
 		return 1;

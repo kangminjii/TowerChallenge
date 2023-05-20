@@ -8,7 +8,16 @@ typedef struct
 	int damage;
 	int defense;
 
-}Monster[];
+}Status;
+
+typedef struct
+{
+	Status mon;
+
+}Monster;
+
+Monster M1, M2, M3, M4, M5, M6, M7, M8, M9, M10;
+
 
 // 새로운 몬스터 만드는 기준
 // 1. 전 몬스터 +@
