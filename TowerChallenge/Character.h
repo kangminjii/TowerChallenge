@@ -6,4 +6,3 @@ typedef struct
 	int damage;
 	int defense;
 }Character;
-

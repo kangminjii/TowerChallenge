@@ -24,7 +24,7 @@
     <ClCompile Include="Fight.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.c">
+    <ClCompile Include="Stage.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClInclude Include="Fight.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="TitleImage.h">
+    <ClInclude Include="Design.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
