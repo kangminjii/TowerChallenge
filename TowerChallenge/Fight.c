@@ -11,7 +11,7 @@
 
 
 // 변수 설정
-Character minji = { 100, 20, 5 };
+Character minji = { 100, 20, 20 };
 Monster M[11] = { {0,0,0},
 	{30, 2, 2}, {50, 4, 4},{70, 8, 8},
 	{100, 10, 10}, {120, 15, 15}, {140, 20, 20}, {160, 25, 25},
@@ -166,6 +166,9 @@ int Character_Defend(Monster M[], int stage)
 
 		if (minji.health <= 0)
 		{
+			Sleep(2000);
+			system("cls");
+			textcolor(DarkRed);
 			printf("격렬한 싸움 끝에 몬스터에게 패배하고 말았습니다..\n\n\n");
 			return -1;
 			// 턴제 공격 종료, 재시작
