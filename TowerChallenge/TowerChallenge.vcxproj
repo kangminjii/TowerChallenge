@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Character.h" />
+    <ClCompile Include="Design.c" />
     <ClCompile Include="Fight.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Stage.c" />

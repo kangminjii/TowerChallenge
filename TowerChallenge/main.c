@@ -3,20 +3,18 @@
 #include <conio.h>
 #include "Fight.h"
 #include "Stage.h"
-#include "Design.h"
-#include "Monster.h"
 
 void main()
 {
 	// 콘솔창 디자인
 	ConsoleUI();
-	TitleImage();
+	Image("tower.txt");
 	Sleep(5000);
 	
 	// 변수 선언
-	int state = 1;
-	int stage = 1;
-	int ret = 0;
+	int state = 1;	// 공격 또는 보호 구분
+	int stage = 1;  // 현재 몇층인지
+	int ret = 0;	// fight.c 함수의 반환값
 
 	Monster M[11] = { {0,0,0},
 	{30, 2, 2}, {50, 4, 4},{70, 8, 8},
@@ -24,12 +22,11 @@ void main()
 	{200, 30, 30}, {250, 40, 40}, {300, 50, 50}
 	};
 
-	
-	stage1();
 	// 전투 시작
+	//textcolor(DarkGreen);		stage1();
 	while (state > 0)
 	{
-		system("mode con:cols=70 lines=40");
+		system("mode con:cols=58 lines=40");
 		system("cls");
 		textcolor(Purple);		printf("주인공의 차례입니다.\n\n");
 		textcolor(Red);			printf("공격");
@@ -68,8 +65,12 @@ void main()
 			ret = Character_Defend(M, stage);
 			break;
 		}
+		
+		// 캐릭터 사망
+		if (ret == -1)	break; // 주인공 사망
 
 		// 스테이지 이동
 		StageClear(ret);
+		if (ret == 11)	break; // 모든 층 클리어
 	}
 }
